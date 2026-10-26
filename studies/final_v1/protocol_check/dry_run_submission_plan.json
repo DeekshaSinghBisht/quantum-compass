@@ -1,0 +1,354 @@
+{
+  "circuits": [
+    {
+      "circuit_name": "qc_g00_b02",
+      "condition_id": "g00_b02",
+      "num_clbits": 6,
+      "num_qubits": 6,
+      "operation_counts": {
+        "h": 6,
+        "measure": 6,
+        "rx": 6,
+        "rzz": 9
+      },
+      "run_order": 1
+    },
+    {
+      "circuit_name": "qc_g01_b00",
+      "condition_id": "g01_b00",
+      "num_clbits": 6,
+      "num_qubits": 6,
+      "operation_counts": {
+        "h": 6,
+        "measure": 6,
+        "rx": 6,
+        "rzz": 9
+      },
+      "run_order": 2
+    },
+    {
+      "circuit_name": "qc_g01_b01",
+      "condition_id": "g01_b01",
+      "num_clbits": 6,
+      "num_qubits": 6,
+      "operation_counts": {
+        "h": 6,
+        "measure": 6,
+        "rx": 6,
+        "rzz": 9
+      },
+      "run_order": 3
+    },
+    {
+      "circuit_name": "qc_g02_b02",
+      "condition_id": "g02_b02",
+      "num_clbits": 6,
+      "num_qubits": 6,
+      "operation_counts": {
+        "h": 6,
+        "measure": 6,
+        "rx": 6,
+        "rzz": 9
+      },
+      "run_order": 4
+    },
+    {
+      "circuit_name": "qc_g01_b02",
+      "condition_id": "g01_b02",
+      "num_clbits": 6,
+      "num_qubits": 6,
+      "operation_counts": {
+        "h": 6,
+        "measure": 6,
+        "rx": 6,
+        "rzz": 9
+      },
+      "run_order": 5
+    },
+    {
+      "circuit_name": "qc_g00_b01",
+      "condition_id": "g00_b01",
+      "num_clbits": 6,
+      "num_qubits": 6,
+      "operation_counts": {
+        "h": 6,
+        "measure": 6,
+        "rx": 6,
+        "rzz": 9
+      },
+      "run_order": 6
+    },
+    {
+      "circuit_name": "qc_g00_b00",
+      "condition_id": "g00_b00",
+      "num_clbits": 6,
+      "num_qubits": 6,
+      "operation_counts": {
+        "h": 6,
+        "measure": 6,
+        "rx": 6,
+        "rzz": 9
+      },
+      "run_order": 7
+    },
+    {
+      "circuit_name": "qc_g02_b01",
+      "condition_id": "g02_b01",
+      "num_clbits": 6,
+      "num_qubits": 6,
+      "operation_counts": {
+        "h": 6,
+        "measure": 6,
+        "rx": 6,
+        "rzz": 9
+      },
+      "run_order": 8
+    },
+    {
+      "circuit_name": "qc_g02_b00",
+      "condition_id": "g02_b00",
+      "num_clbits": 6,
+      "num_qubits": 6,
+      "operation_counts": {
+        "h": 6,
+        "measure": 6,
+        "rx": 6,
+        "rzz": 9
+      },
+      "run_order": 9
+    }
+  ],
+  "dry_run_created_utc": "2026-10-26T17:09:07+00:00",
+  "manifest": {
+    "analysis_plan": {
+      "bootstrap_resamples": 2000,
+      "confidence_level": 0.95,
+      "interpretation": "Agreement measures predictive fit for this manifest only; it does not identify a physical noise source or demonstrate general quantum advantage.",
+      "primary_endpoint": "approximation_ratio",
+      "secondary_endpoints": [
+        "total_variation_distance",
+        "hellinger_distance",
+        "jensen_shannon_divergence",
+        "absolute_ratio_error"
+      ]
+    },
+    "created_utc": "2026-10-26T16:57:30+00:00",
+    "execution_plan": {
+      "condition_count": 9,
+      "conditions": [
+        {
+          "beta": 0.7853981633974483,
+          "betas": [
+            0.7853981633974483
+          ],
+          "condition_id": "g00_b02",
+          "gamma": 0.0,
+          "gammas": [
+            0.0
+          ],
+          "grid_index": [
+            0,
+            2
+          ],
+          "run_order": 1
+        },
+        {
+          "beta": 0.0,
+          "betas": [
+            0.0
+          ],
+          "condition_id": "g01_b00",
+          "gamma": 0.7853981633974483,
+          "gammas": [
+            0.7853981633974483
+          ],
+          "grid_index": [
+            1,
+            0
+          ],
+          "run_order": 2
+        },
+        {
+          "beta": 0.39269908169872414,
+          "betas": [
+            0.39269908169872414
+          ],
+          "condition_id": "g01_b01",
+          "gamma": 0.7853981633974483,
+          "gammas": [
+            0.7853981633974483
+          ],
+          "grid_index": [
+            1,
+            1
+          ],
+          "run_order": 3
+        },
+        {
+          "beta": 0.7853981633974483,
+          "betas": [
+            0.7853981633974483
+          ],
+          "condition_id": "g02_b02",
+          "gamma": 1.5707963267948966,
+          "gammas": [
+            1.5707963267948966
+          ],
+          "grid_index": [
+            2,
+            2
+          ],
+          "run_order": 4
+        },
+        {
+          "beta": 0.7853981633974483,
+          "betas": [
+            0.7853981633974483
+          ],
+          "condition_id": "g01_b02",
+          "gamma": 0.7853981633974483,
+          "gammas": [
+            0.7853981633974483
+          ],
+          "grid_index": [
+            1,
+            2
+          ],
+          "run_order": 5
+        },
+        {
+          "beta": 0.39269908169872414,
+          "betas": [
+            0.39269908169872414
+          ],
+          "condition_id": "g00_b01",
+          "gamma": 0.0,
+          "gammas": [
+            0.0
+          ],
+          "grid_index": [
+            0,
+            1
+          ],
+          "run_order": 6
+        },
+        {
+          "beta": 0.0,
+          "betas": [
+            0.0
+          ],
+          "condition_id": "g00_b00",
+          "gamma": 0.0,
+          "gammas": [
+            0.0
+          ],
+          "grid_index": [
+            0,
+            0
+          ],
+          "run_order": 7
+        },
+        {
+          "beta": 0.39269908169872414,
+          "betas": [
+            0.39269908169872414
+          ],
+          "condition_id": "g02_b01",
+          "gamma": 1.5707963267948966,
+          "gammas": [
+            1.5707963267948966
+          ],
+          "grid_index": [
+            2,
+            1
+          ],
+          "run_order": 8
+        },
+        {
+          "beta": 0.0,
+          "betas": [
+            0.0
+          ],
+          "condition_id": "g02_b00",
+          "gamma": 1.5707963267948966,
+          "gammas": [
+            1.5707963267948966
+          ],
+          "grid_index": [
+            2,
+            0
+          ],
+          "run_order": 9
+        }
+      ],
+      "measurement_bit_order": "vertex-order",
+      "qiskit_raw_counts_order": "qiskit-classical-order",
+      "randomization_seed": 2027,
+      "shots_per_condition": 4096
+    },
+    "graph": {
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          5
+        ]
+      ],
+      "metadata": {
+        "erdos_renyi_probability": null,
+        "family": "3-regular",
+        "scale_free_m": null,
+        "seed": 42
+      },
+      "n_qubits": 6
+    },
+    "kind": "quantum-compass-qaoa-hardware-validation",
+    "manifest_id": "3af2ae6317092dbcbf6a0dde42ee32d4305570f15160e173995ffa97ab408f6c",
+    "provenance": {
+      "normalization": "All stored bitstrings use vertex order: character i is vertex i.",
+      "protocol": "pre-specified hardware/simulator comparison",
+      "software": "Quantum Compass"
+    },
+    "qaoa": {
+      "cost_gate": "rzz(2*gamma)",
+      "depth": 1,
+      "measurement": "computational-basis",
+      "mixer_gate": "rx(2*beta)",
+      "parameterization": "p=1"
+    },
+    "schema_version": 1
+  },
+  "network_submission": false,
+  "qiskit_version": "2.6.1"
+}
