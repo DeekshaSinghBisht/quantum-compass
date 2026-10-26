@@ -1,0 +1,29 @@
+services:
+  quantum-compass:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: quantum-compass:latest
+    ports:
+      - "${QC_PORT:-8501}:8501"
+    environment:
+      BROWSER_GATHER_USAGE_STATS: "false"
+      # Limit native simulation threads in constrained Docker hosts. Override
+      # this in your shell or a Compose env file when more cores are available.
+      QUANTUM_COMPASS_THREADS: "${QUANTUM_COMPASS_THREADS:-2}"
+      # Optional: enables the repository button on the About page.
+      QUANTUM_COMPASS_GITHUB_URL: "${QUANTUM_COMPASS_GITHUB_URL:-}"
+    volumes:
+      # Persists generated advantage maps, plateau diagrams, and the compatible
+      # fingerprint cache across container recreation. Docker copies the image's
+      # pre-trained cache into this named volume on first use.
+      - quantum-compass-data:/app/data
+      # Keeps manifests, dry-run plans, real hardware counts, and analyses on
+      # the host rather than inside a disposable container or image layer.
+      # This directory deliberately contains no credential files.
+      - "${QC_STUDIES_DIR:-./studies}:/app/studies"
+    restart: unless-stopped
+
+volumes:
+  quantum-compass-data:
+    name: quantum-compass-data

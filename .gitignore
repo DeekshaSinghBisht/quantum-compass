@@ -1,0 +1,34 @@
+# Python bytecode and tooling
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage/
+htmlcov/
+
+# Local environments and configuration
+.venv/
+venv/
+env/
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+
+# Local editor/OS files
+.DS_Store
+.vscode/
+.idea/
+
+# Local export output and temporary artifacts
+exports/
+reports/
+*.tmp
+
+# Durable application caches generated locally; the bundled fingerprint model
+# is intentionally versioned for immediate deployed inference.
+data/advantage_maps/*.json
+data/barren_diagrams/*.json

@@ -1,0 +1,42 @@
+# Source control, local environments, and Python test/build caches
+.git/
+.github/
+.venv/
+venv/
+env/
+__pycache__/
+**/__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage/
+htmlcov/
+
+# IDE and operating-system files
+.DS_Store
+.vscode/
+.idea/
+
+# Credentials and local runtime configuration
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+
+# Generated application caches and user-created exports
+exports/
+reports/
+out/
+build/
+dist/
+# Real manifests/counts belong on the host bind mount and must never be baked
+# into an image that could later be shared or pushed to a registry.
+studies/
+data/advantage_maps/*.json
+data/barren_diagrams/*.json
+
+# Nested/compressed releases should not recursively enter the image build context
+*.zip
+*.tar
+*.tar.gz

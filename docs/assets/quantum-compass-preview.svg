@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" role="img" aria-labelledby="title desc">
+  <title id="title">Quantum Compass interface preview</title>
+  <desc id="desc">A dark Quantum Compass QAOA landscape dashboard with controls, a contour landscape, and summary metrics.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0A0A0A"/>
+      <stop offset="1" stop-color="#121226"/>
+    </linearGradient>
+    <linearGradient id="contour" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#1B1B3A"/>
+      <stop offset=".32" stop-color="#2A5A88"/>
+      <stop offset=".58" stop-color="#00B4D8"/>
+      <stop offset=".78" stop-color="#82D9B2"/>
+      <stop offset="1" stop-color="#FFD166"/>
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <clipPath id="plot"><rect x="330" y="180" width="830" height="445" rx="16"/></clipPath>
+  </defs>
+  <rect width="1280" height="760" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1280" height="76" fill="#1A1A2E"/>
+  <circle cx="43" cy="38" r="17" fill="#00B4D8"/>
+  <path d="M43 24l7 14-7 14-7-14z" fill="#0A0A0A"/>
+  <text x="76" y="43" fill="#F5F7FA" font-family="Arial, sans-serif" font-size="25" font-weight="700">Quantum Compass</text>
+  <text x="301" y="42" fill="#93A4B8" font-family="Arial, sans-serif" font-size="14">QAOA Optimization Landscape Navigator</text>
+  <text x="1075" y="42" fill="#00B4D8" font-family="Arial, sans-serif" font-size="14" font-weight="700">● LIVE SIMULATION</text>
+
+  <rect x="24" y="100" width="270" height="634" rx="18" fill="#1A1A2E" stroke="#30304A"/>
+  <text x="48" y="139" fill="#F5F7FA" font-family="Arial, sans-serif" font-size="18" font-weight="700">Experiment controls</text>
+  <text x="48" y="178" fill="#9EACC0" font-family="Arial, sans-serif" font-size="12" font-weight="700">GRAPH FAMILY</text>
+  <rect x="48" y="191" width="222" height="43" rx="8" fill="#101020" stroke="#3B3B58"/>
+  <text x="62" y="218" fill="#E0E6EE" font-family="Arial, sans-serif" font-size="14">3-regular graph</text>
+  <text x="247" y="218" fill="#00B4D8" font-family="Arial, sans-serif" font-size="17">⌄</text>
+  <text x="48" y="271" fill="#9EACC0" font-family="Arial, sans-serif" font-size="12" font-weight="700">QAOA DEPTH</text>
+  <rect x="48" y="284" width="222" height="43" rx="8" fill="#101020" stroke="#3B3B58"/>
+  <text x="62" y="311" fill="#E0E6EE" font-family="Arial, sans-serif" font-size="14">p = 1</text>
+  <text x="48" y="364" fill="#9EACC0" font-family="Arial, sans-serif" font-size="12" font-weight="700">ENVIRONMENT</text>
+  <rect x="48" y="377" width="222" height="43" rx="8" fill="#101020" stroke="#3B3B58"/>
+  <circle cx="67" cy="398" r="6" fill="#FFD166"/>
+  <text x="82" y="403" fill="#E0E6EE" font-family="Arial, sans-serif" font-size="14">LEO satellite</text>
+  <text x="48" y="461" fill="#9EACC0" font-family="Arial, sans-serif" font-size="12" font-weight="700">NOISE LEVEL</text>
+  <text x="225" y="461" fill="#00B4D8" font-family="Arial, sans-serif" font-size="13" font-weight="700">0.008</text>
+  <line x1="52" y1="489" x2="266" y2="489" stroke="#3C4660" stroke-width="6" stroke-linecap="round"/>
+  <line x1="52" y1="489" x2="155" y2="489" stroke="#00B4D8" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="155" cy="489" r="10" fill="#00B4D8" stroke="#D8F8FF" stroke-width="3"/>
+  <rect x="48" y="550" width="222" height="49" rx="10" fill="#00B4D8"/>
+  <text x="90" y="581" fill="#071014" font-family="Arial, sans-serif" font-size="15" font-weight="700">Recompute landscape</text>
+  <text x="48" y="657" fill="#93A4B8" font-family="Arial, sans-serif" font-size="12">Exact ratio surface • Aer worker</text>
+  <text x="48" y="682" fill="#93A4B8" font-family="Arial, sans-serif" font-size="12">Density matrix when noisy</text>
+
+  <text x="330" y="127" fill="#F5F7FA" font-family="Arial, sans-serif" font-size="25" font-weight="700">QAOA approximation-ratio landscape</text>
+  <text x="330" y="153" fill="#93A4B8" font-family="Arial, sans-serif" font-size="14">γ / β surface · 4-qubit MaxCut · LEO satellite noise model</text>
+  <rect x="330" y="180" width="830" height="445" rx="16" fill="#101020" stroke="#30304A"/>
+  <g clip-path="url(#plot)">
+    <rect x="330" y="180" width="830" height="445" fill="url(#contour)" opacity=".88"/>
+    <g fill="none" stroke="#E5F9FF" opacity=".38" stroke-width="2">
+      <path d="M300 535 C420 410 512 640 640 475 S840 310 950 445 S1080 590 1200 352"/>
+      <path d="M300 495 C416 370 530 588 650 428 S838 272 946 408 S1072 546 1200 317"/>
+      <path d="M300 455 C410 335 538 545 660 388 S836 234 942 368 S1067 506 1200 282"/>
+      <path d="M300 415 C410 300 544 500 670 346 S832 198 938 327 S1065 466 1200 248"/>
+      <path d="M300 375 C409 265 550 457 680 306 S830 162 932 287 S1058 427 1200 213"/>
+    </g>
+    <g fill="none" stroke="#08141D" opacity=".25" stroke-width="2">
+      <ellipse cx="780" cy="372" rx="210" ry="117"/>
+      <ellipse cx="780" cy="372" rx="155" ry="85"/>
+      <ellipse cx="780" cy="372" rx="102" ry="55"/>
+      <ellipse cx="780" cy="372" rx="54" ry="28"/>
+    </g>
+    <circle cx="780" cy="372" r="12" fill="#FFD166" filter="url(#glow)"/>
+    <path d="M780 349l5 14h15l-12 9 5 15-13-9-13 9 5-15-12-9h15z" fill="#FFF7D4"/>
+  </g>
+  <text x="333" y="652" fill="#9EACC0" font-family="Arial, sans-serif" font-size="13">γ  0</text>
+  <text x="1108" y="652" fill="#9EACC0" font-family="Arial, sans-serif" font-size="13">2π</text>
+  <text x="1190" y="613" fill="#9EACC0" font-family="Arial, sans-serif" font-size="13">β</text>
+  <rect x="1186" y="205" width="12" height="310" rx="6" fill="url(#contour)"/>
+  <text x="1207" y="216" fill="#E0E6EE" font-family="Arial, sans-serif" font-size="12">0.91</text>
+  <text x="1207" y="513" fill="#E0E6EE" font-family="Arial, sans-serif" font-size="12">0.52</text>
+
+  <g>
+    <rect x="330" y="657" width="248" height="77" rx="14" fill="#1A1A2E" stroke="#30304A"/>
+    <text x="350" y="684" fill="#9EACC0" font-family="Arial, sans-serif" font-size="12">BEST APPROX. RATIO</text>
+    <text x="350" y="716" fill="#82D9B2" font-family="Arial, sans-serif" font-size="27" font-weight="700">0.914</text>
+    <rect x="596" y="657" width="248" height="77" rx="14" fill="#1A1A2E" stroke="#30304A"/>
+    <text x="616" y="684" fill="#9EACC0" font-family="Arial, sans-serif" font-size="12">LANDSCAPE VARIANCE</text>
+    <text x="616" y="716" fill="#00B4D8" font-family="Arial, sans-serif" font-size="27" font-weight="700">0.0178</text>
+    <rect x="862" y="657" width="298" height="77" rx="14" fill="#1A1A2E" stroke="#30304A"/>
+    <text x="882" y="684" fill="#9EACC0" font-family="Arial, sans-serif" font-size="12">FINGERPRINT DIAGNOSTIC</text>
+    <text x="882" y="716" fill="#FFD166" font-family="Arial, sans-serif" font-size="20" font-weight="700">LEO · 96.2% confidence</text>
+  </g>
+</svg>
