@@ -20,14 +20,18 @@ The completed final study's public interpretation belongs in [`hardware_validati
 
 ## Safe visual assets
 
-The repository uses two safe, app-generated hardware-result exports:
+The repository uses one reviewed three-output evidence set for each completed study:
 
 ```text
-docs/assets/hardware_validation/final_ibm_kingston_aggregate_metrics.png
+docs/assets/hardware_validation/pilot_ibm_kingston_ratio_comparison.png
+docs/assets/hardware_validation/pilot_ibm_kingston_condition_results.png
+docs/assets/hardware_validation/pilot_ibm_kingston_aggregate_metrics.png
 docs/assets/hardware_validation/final_ibm_kingston_ratio_comparison.png
+docs/assets/hardware_validation/final_ibm_kingston_condition_results.png
+docs/assets/hardware_validation/final_ibm_kingston_aggregate_metrics.png
 ```
 
-The first displays real final aggregate analysis metrics. The second is the real nine-condition, hardware-versus-ideal approximation-ratio comparison in preregistered randomized execution order. Neither reveals a token, dashboard, local path, browser profile, or personal account context. They are suitable for README-level context only when accompanied by the claim boundary in the hardware-results report.
+For both the four-qubit pilot and six-qubit final study, the triplet preserves the actual app output: the hardware-versus-ideal approximation-ratio comparison, every retained condition, and aggregate distributional metrics. The final ratio image was cropped only to remove Plotly controls and excess canvas margin; no plotted value, table cell, or scientific data was changed. None of the six assets reveals a token, dashboard, local path, browser profile, or personal account context. They are suitable for README-level evidence only when accompanied by the claim boundary in the hardware-results report.
 
 The repository also includes a reviewed real-application gallery at:
 

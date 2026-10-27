@@ -1,18 +1,31 @@
 # Hardware-validation visual assets
 
-This directory holds static, public-safe assets for the documented IBM Quantum hardware studies.
+This directory holds reviewed static exports from Quantum Compass’s **Experimental Validation** page for the completed IBM Quantum `ibm_kingston` studies.
 
-## Included assets
+## Included evidence triplets
 
-- `final_ibm_kingston_aggregate_metrics.png` — a cropped export from Quantum Compass’s **Experimental Validation** page showing aggregate ideal-Aer-versus-measured-hardware metrics for the completed six-qubit study (manifest ID `3af2ae6317092dbcbf6a0dde42ee32d4305570f15160e173995ffa97ab408f6c`).
-- `final_ibm_kingston_ratio_comparison.png` — the app-exported nine-condition **Pre-specified QAOA ratio comparison** for the same final study. Orange markers/line represent measured hardware; the blue dotted line represents the ideal-Aer reference, in preregistered randomized execution order.
+Each completed study has the same three-result set: a pre-specified approximation-ratio comparison, the full per-condition output table, and the aggregate distributional-agreement table.
 
-Both figures were exported from the real Quantum Compass application using the completed final-study inputs. They contain no API key, CRN, account usage, dashboard identity information, local filesystem path, browser chrome, or personal profile information.
+### Four-qubit pipeline pilot
+
+- `pilot_ibm_kingston_ratio_comparison.png` — four-condition QAOA approximation-ratio comparison in randomized execution order. Orange is measured hardware and blue dotted is the ideal-Aer reference.
+- `pilot_ibm_kingston_condition_results.png` — all four retained conditions with angle values, 1,024 shots each, observed ratio, 95% interval, ideal-Aer ratio, total-variation distance, and absolute ratio error.
+- `pilot_ibm_kingston_aggregate_metrics.png` — aggregate ideal-Aer-versus-hardware agreement: weighted MAE ratio `0.0079`, RMSE ratio `0.0082`, TVD `0.0642`, Hellinger `0.0559`, and JS divergence `0.0047`.
+
+### Six-qubit preregistered final study
+
+- `final_ibm_kingston_ratio_comparison.png` — nine-condition QAOA approximation-ratio comparison in preregistered randomized execution order. Orange is measured hardware and blue dotted is the ideal-Aer reference.
+- `final_ibm_kingston_condition_results.png` — all nine retained conditions with angle values, 4,096 shots each, observed ratio, 95% interval, ideal-Aer ratio, total-variation distance, and absolute ratio error.
+- `final_ibm_kingston_aggregate_metrics.png` — aggregate ideal-Aer-versus-hardware agreement: weighted MAE ratio `0.0050`, RMSE ratio `0.0078`, TVD `0.0798`, Hellinger `0.0923`, and JS divergence `0.0152`.
+
+The source material was supplied from completed app output. The final ratio export has only been cropped to remove Plotly controls and excess canvas margin; no plotted value, table cell, or scientific data was changed. PNG metadata was stripped on copy.
 
 ## Interpretation boundary
 
-These visuals document a small, fixed hardware/simulator comparison. They must be accompanied by the aggregate metrics and limitations in [`../../research/hardware_validation_results.md`](../../research/hardware_validation_results.md). They do not support claims of quantum advantage, a universal hardware-noise model, or physical-noise attribution.
+These visuals document two small, fixed hardware/simulator comparisons. They must be read with the provenance and limitations in [`../../research/hardware_validation_results.md`](../../research/hardware_validation_results.md). They do not support claims of quantum advantage, a universal hardware-noise model, device superiority, or physical-noise attribution.
+
+The pilot and final metrics are not a direct device-performance ranking: their graph, angle grid, and shot budget differ. The progression demonstrates an end-to-end pilot followed by a larger pre-specified study on the same named backend.
 
 ## Publication rule
 
-Use only application-chart exports or reviewed app screenshots. Do not publish IBM account dashboards, API-key pages, CRNs, private workload pages, terminal screenshots, browser profile data, personal email addresses, or account/trial details.
+Use only app-generated exports or reviewed app screenshots. Do not publish IBM account dashboards, API-key pages, CRNs, private workload pages, terminal screenshots, browser profile data, personal email addresses, account/trial details, or full unredacted local filesystem paths.

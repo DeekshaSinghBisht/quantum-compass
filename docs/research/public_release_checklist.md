@@ -14,8 +14,9 @@ Use this checklist before changing the Quantum Compass repository from private t
 
 ## Visuals
 
-- [x] Keep the public-safe aggregate metrics figure at `docs/assets/hardware_validation/final_ibm_kingston_aggregate_metrics.png`.
-- [x] Include the reviewed, app-exported final ratio-comparison chart at `docs/assets/hardware_validation/final_ibm_kingston_ratio_comparison.png`; do not redraw it from prose metrics.
+- [x] Keep the complete reviewed pilot evidence triplet: `pilot_ibm_kingston_ratio_comparison.png`, `pilot_ibm_kingston_condition_results.png`, and `pilot_ibm_kingston_aggregate_metrics.png` under `docs/assets/hardware_validation/`.
+- [x] Keep the complete reviewed final-study evidence triplet: `final_ibm_kingston_ratio_comparison.png`, `final_ibm_kingston_condition_results.png`, and `final_ibm_kingston_aggregate_metrics.png` under `docs/assets/hardware_validation/`.
+- [x] Preserve every retained condition and aggregate metric; do not redraw an output from prose values or remove an unfavourable condition. The only permitted presentation edit is removal of non-data Plotly controls/canvas margin from the final ratio capture.
 - [x] Include the reviewed real-application gallery at `docs/application_gallery.md` and `docs/assets/application/`, with captions that distinguish simulator/planning interfaces from hardware evidence.
 - [ ] Do not publish IBM dashboard screenshots containing account name, trial/usage details, CRN, API key, or private workload information.
 
