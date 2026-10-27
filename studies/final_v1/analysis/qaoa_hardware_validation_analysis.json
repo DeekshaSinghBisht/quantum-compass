@@ -1,0 +1,367 @@
+{
+  "manifest_id": "3af2ae6317092dbcbf6a0dde42ee32d4305570f15160e173995ffa97ab408f6c",
+  "graph": {
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        3
+      ],
+      [
+        0,
+        4
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        5
+      ],
+      [
+        2,
+        4
+      ],
+      [
+        2,
+        5
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        3,
+        5
+      ]
+    ],
+    "metadata": {
+      "erdos_renyi_probability": null,
+      "family": "3-regular",
+      "scale_free_m": null,
+      "seed": 42
+    },
+    "n_qubits": 6
+  },
+  "coverage": {
+    "planned_conditions": 9,
+    "observed_conditions": 9,
+    "missing_condition_ids": [],
+    "observed_shots": 36864
+  },
+  "conditions": [
+    {
+      "condition_id": "g00_b02",
+      "run_order": 1,
+      "gamma": 0.0,
+      "beta": 0.7853981633974483,
+      "observed": {
+        "shots": 4096,
+        "expected_cut": 4.517822265625,
+        "optimal_cut": 7,
+        "approximation_ratio": 0.6454031808035714,
+        "confidence_level": 0.95,
+        "lower": 0.638671875,
+        "upper": 0.6519949776785714,
+        "standard_error": 0.0033484474569290164,
+        "resamples": 2000
+      },
+      "models": {
+        "ideal_aer": {
+          "available": true,
+          "predicted": {
+            "shots": 4096,
+            "expected_cut": 4.5,
+            "optimal_cut": 7,
+            "approximation_ratio": 0.6428571428571429
+          },
+          "signed_ratio_error": -0.002546037946428492,
+          "absolute_ratio_error": 0.002546037946428492,
+          "total_variation_distance": 0.043701171875,
+          "hellinger_distance": 0.040242460098271475,
+          "jensen_shannon_divergence": 0.0023346006174176526
+        }
+      }
+    },
+    {
+      "condition_id": "g01_b00",
+      "run_order": 2,
+      "gamma": 0.7853981633974483,
+      "beta": 0.0,
+      "observed": {
+        "shots": 4096,
+        "expected_cut": 4.5390625,
+        "optimal_cut": 7,
+        "approximation_ratio": 0.6484375,
+        "confidence_level": 0.95,
+        "lower": 0.641845703125,
+        "upper": 0.6552760532924107,
+        "standard_error": 0.003406890321745784,
+        "resamples": 2000
+      },
+      "models": {
+        "ideal_aer": {
+          "available": true,
+          "predicted": {
+            "shots": 4096,
+            "expected_cut": 4.5,
+            "optimal_cut": 7,
+            "approximation_ratio": 0.6428571428571429
+          },
+          "signed_ratio_error": -0.005580357142857095,
+          "absolute_ratio_error": 0.005580357142857095,
+          "total_variation_distance": 0.0634765625,
+          "hellinger_distance": 0.05781470711688843,
+          "jensen_shannon_divergence": 0.004812491251935046
+        }
+      }
+    },
+    {
+      "condition_id": "g01_b01",
+      "run_order": 3,
+      "gamma": 0.7853981633974483,
+      "beta": 0.39269908169872414,
+      "observed": {
+        "shots": 4096,
+        "expected_cut": 4.536865234375,
+        "optimal_cut": 7,
+        "approximation_ratio": 0.6481236049107143,
+        "confidence_level": 0.95,
+        "lower": 0.6409031459263393,
+        "upper": 0.6555193219866071,
+        "standard_error": 0.003642844296886835,
+        "resamples": 2000
+      },
+      "models": {
+        "ideal_aer": {
+          "available": true,
+          "predicted": {
+            "shots": 4096,
+            "expected_cut": 4.5,
+            "optimal_cut": 7,
+            "approximation_ratio": 0.6428571428571429
+          },
+          "signed_ratio_error": -0.005266462053571397,
+          "absolute_ratio_error": 0.005266462053571397,
+          "total_variation_distance": 0.092041015625,
+          "hellinger_distance": 0.13967439681583269,
+          "jensen_shannon_divergence": 0.02143109159708302
+        }
+      }
+    },
+    {
+      "condition_id": "g02_b02",
+      "run_order": 4,
+      "gamma": 1.5707963267948966,
+      "beta": 0.7853981633974483,
+      "observed": {
+        "shots": 4096,
+        "expected_cut": 4.49853515625,
+        "optimal_cut": 7,
+        "approximation_ratio": 0.6426478794642857,
+        "confidence_level": 0.95,
+        "lower": 0.6360212053571429,
+        "upper": 0.6492056710379465,
+        "standard_error": 0.0033428096710465915,
+        "resamples": 2000
+      },
+      "models": {
+        "ideal_aer": {
+          "available": true,
+          "predicted": {
+            "shots": 4096,
+            "expected_cut": 4.5,
+            "optimal_cut": 7,
+            "approximation_ratio": 0.6428571428571429
+          },
+          "signed_ratio_error": 0.0002092633928572063,
+          "absolute_ratio_error": 0.0002092633928572063,
+          "total_variation_distance": 0.0732421875,
+          "hellinger_distance": 0.06037098238831366,
+          "jensen_shannon_divergence": 0.005251641852656134
+        }
+      }
+    },
+    {
+      "condition_id": "g01_b02",
+      "run_order": 5,
+      "gamma": 0.7853981633974483,
+      "beta": 0.7853981633974483,
+      "observed": {
+        "shots": 4096,
+        "expected_cut": 4.490478515625,
+        "optimal_cut": 7,
+        "approximation_ratio": 0.6414969308035714,
+        "confidence_level": 0.95,
+        "lower": 0.6321829659598215,
+        "upper": 0.6509844098772322,
+        "standard_error": 0.004861255638930358,
+        "resamples": 2000
+      },
+      "models": {
+        "ideal_aer": {
+          "available": true,
+          "predicted": {
+            "shots": 4096,
+            "expected_cut": 4.5,
+            "optimal_cut": 7,
+            "approximation_ratio": 0.6428571428571429
+          },
+          "signed_ratio_error": 0.0013602120535715079,
+          "absolute_ratio_error": 0.0013602120535715079,
+          "total_variation_distance": 0.148193359375,
+          "hellinger_distance": 0.27904268273640165,
+          "jensen_shannon_divergence": 0.0795274452159362
+        }
+      }
+    },
+    {
+      "condition_id": "g00_b01",
+      "run_order": 6,
+      "gamma": 0.0,
+      "beta": 0.39269908169872414,
+      "observed": {
+        "shots": 4096,
+        "expected_cut": 4.511962890625,
+        "optimal_cut": 7,
+        "approximation_ratio": 0.6445661272321429,
+        "confidence_level": 0.95,
+        "lower": 0.6381827218191964,
+        "upper": 0.6512625558035714,
+        "standard_error": 0.003395825482443637,
+        "resamples": 2000
+      },
+      "models": {
+        "ideal_aer": {
+          "available": true,
+          "predicted": {
+            "shots": 4096,
+            "expected_cut": 4.5,
+            "optimal_cut": 7,
+            "approximation_ratio": 0.6428571428571429
+          },
+          "signed_ratio_error": -0.001708984375,
+          "absolute_ratio_error": 0.001708984375,
+          "total_variation_distance": 0.058837890625,
+          "hellinger_distance": 0.05098151988134492,
+          "jensen_shannon_divergence": 0.0037455682706784114
+        }
+      }
+    },
+    {
+      "condition_id": "g00_b00",
+      "run_order": 7,
+      "gamma": 0.0,
+      "beta": 0.0,
+      "observed": {
+        "shots": 4096,
+        "expected_cut": 4.507080078125,
+        "optimal_cut": 7,
+        "approximation_ratio": 0.6438685825892857,
+        "confidence_level": 0.95,
+        "lower": 0.6371712820870535,
+        "upper": 0.6504952566964286,
+        "standard_error": 0.0033616468888796403,
+        "resamples": 2000
+      },
+      "models": {
+        "ideal_aer": {
+          "available": true,
+          "predicted": {
+            "shots": 4096,
+            "expected_cut": 4.5,
+            "optimal_cut": 7,
+            "approximation_ratio": 0.6428571428571429
+          },
+          "signed_ratio_error": -0.0010114397321427937,
+          "absolute_ratio_error": 0.0010114397321427937,
+          "total_variation_distance": 0.085693359375,
+          "hellinger_distance": 0.07145580828830111,
+          "jensen_shannon_divergence": 0.007353543235661296
+        }
+      }
+    },
+    {
+      "condition_id": "g02_b01",
+      "run_order": 8,
+      "gamma": 1.5707963267948966,
+      "beta": 0.39269908169872414,
+      "observed": {
+        "shots": 4096,
+        "expected_cut": 4.353759765625,
+        "optimal_cut": 7,
+        "approximation_ratio": 0.6219656808035714,
+        "confidence_level": 0.95,
+        "lower": 0.6150599888392857,
+        "upper": 0.6284885951450893,
+        "standard_error": 0.0033492963656641854,
+        "resamples": 2000
+      },
+      "models": {
+        "ideal_aer": {
+          "available": true,
+          "predicted": {
+            "shots": 4096,
+            "expected_cut": 4.5,
+            "optimal_cut": 7,
+            "approximation_ratio": 0.6428571428571429
+          },
+          "signed_ratio_error": 0.020891462053571508,
+          "absolute_ratio_error": 0.020891462053571508,
+          "total_variation_distance": 0.082763671875,
+          "hellinger_distance": 0.06962050257237037,
+          "jensen_shannon_divergence": 0.0069779514004130105
+        }
+      }
+    },
+    {
+      "condition_id": "g02_b00",
+      "run_order": 9,
+      "gamma": 1.5707963267948966,
+      "beta": 0.0,
+      "observed": {
+        "shots": 4096,
+        "expected_cut": 4.544921875,
+        "optimal_cut": 7,
+        "approximation_ratio": 0.6492745535714286,
+        "confidence_level": 0.95,
+        "lower": 0.642681884765625,
+        "upper": 0.6553431919642857,
+        "standard_error": 0.0032403447400908194,
+        "resamples": 2000
+      },
+      "models": {
+        "ideal_aer": {
+          "available": true,
+          "predicted": {
+            "shots": 4096,
+            "expected_cut": 4.5,
+            "optimal_cut": 7,
+            "approximation_ratio": 0.6428571428571429
+          },
+          "signed_ratio_error": -0.006417410714285698,
+          "absolute_ratio_error": 0.006417410714285698,
+          "total_variation_distance": 0.070068359375,
+          "hellinger_distance": 0.06151884786593955,
+          "jensen_shannon_divergence": 0.0054476856173156785
+        }
+      }
+    }
+  ],
+  "model_summary": {
+    "ideal_aer": {
+      "available_conditions": 9,
+      "weighted_mean_absolute_ratio_error": 0.004999069940476188,
+      "weighted_mean_signed_ratio_error": -7.750496031694926e-06,
+      "weighted_root_mean_squared_ratio_error": 0.007809056498450068,
+      "weighted_mean_total_variation_distance": 0.07977973090277778,
+      "weighted_mean_hellinger_distance": 0.09230243419596265,
+      "weighted_mean_jensen_shannon_divergence": 0.015209113228788497
+    }
+  },
+  "interpretation_boundary": "Agreement measures predictive fit for this manifest only; it does not identify a physical noise source or demonstrate general quantum advantage."
+}

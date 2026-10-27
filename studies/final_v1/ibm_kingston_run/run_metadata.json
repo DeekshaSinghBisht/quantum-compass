@@ -1,0 +1,13 @@
+{
+  "backend": "ibm_kingston",
+  "condition_count": 9,
+  "job_id": "dbfp1pfsstms73fec6q0",
+  "manifest_id": "3af2ae6317092dbcbf6a0dde42ee32d4305570f15160e173995ffa97ab408f6c",
+  "normalized_count_order": "vertex-order",
+  "optimization_level": 1,
+  "planned_shots_per_condition": 4096,
+  "qiskit_version": "2.6.1",
+  "raw_count_order": "qiskit-classical-order",
+  "submitted_result_retrieved_utc": "2026-10-27T05:46:05+00:00",
+  "token_stored": false
+}
