@@ -75,13 +75,24 @@ python scripts/submit_ibm_validation.py \
   --output-dir results/ibm_brisbane_run
 ```
 
-Use a backend available to your own IBM Quantum account; `ibm_brisbane` above is a concrete example, not a guaranteed allocation. The CLI transpiles circuits to the selected backend target, submits them through IBM Runtime `SamplerV2`, then writes:
+Use a backend available to your own IBM Quantum account; `ibm_brisbane` above is a concrete example, not a guaranteed allocation. The CLI transpiles circuits to the selected backend target and prefers the current client-side IBM Runtime sampler, with a compatibility fallback for older supported Runtime clients. As soon as IBM returns a job ID, it writes:
 
-- `counts_long.csv` — normalized vertex-order counts for analysis;
+- `submission_receipt.json` — immediate credential-free proof of the accepted job ID and submission configuration;
+- `counts_long.csv` — normalized vertex-order counts for analysis after result retrieval;
 - `raw_qiskit_counts.json` — unmodified Runtime count keys for auditability; and
-- `run_metadata.json` — job ID, backend, timestamp, Qiskit version, compiler level, and count-order provenance.
+- `run_metadata.json` — job ID, backend, timestamp, Qiskit version, Runtime sampler/compiler details, count-order provenance, and direct-versus-recovered result source.
 
-The IBM token is never stored in any output file. Do not commit it, a `.env` file, or Streamlit secrets.
+The IBM token is never stored in any output file. Do not commit it, a `.env` file, or Streamlit secrets. If the local client stops after a job ID is issued, do **not** submit again. Recover the original remote job with:
+
+```bash
+python scripts/submit_ibm_validation.py \
+  --manifest qaoa_validation_manifest.json \
+  --backend ibm_brisbane \
+  --job-id RECORDED_RUNTIME_JOB_ID \
+  --output-dir results/ibm_brisbane_run
+```
+
+Recovery writes `job_recovery_receipt.json` and retrieves `service.job(job_id)` without sending a replacement circuit batch.
 
 ### 4. Analyze without changing the protocol
 
@@ -124,12 +135,13 @@ A credible supplement, repository release, report, or application portfolio entr
 
 1. this protocol version;
 2. the immutable manifest JSON;
-3. the submission command and dry-run plan;
+3. the submission command, dry-run plan, and immediate submission or recovery receipt;
 4. `counts_long.csv`, raw count JSON, and run metadata;
 5. the exact project commit or release ZIP;
 6. analysis JSON/Markdown and plotted results;
-7. backend and calibration date/time; and
-8. a limitations paragraph distinguishing simulator agreement from physical-noise attribution.
+7. backend and calibration date/time;
+8. environment/checksum records captured from the actual study checkout; and
+9. a limitations paragraph distinguishing simulator agreement from physical-noise attribution.
 
 ## Interpretation boundaries
 

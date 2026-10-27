@@ -10,11 +10,13 @@
 
 **It is also a transparent diagnostic and planning toolkit rather than a black-box quantum-advantage claim.** The app uses deterministic Aer evaluations for smooth landscapes, isolates Qiskit execution in a persistent worker process, records approximation and feasibility assumptions for large studies, and exports reproducible data and reports. It includes radiation-/link-inspired environments, a landscape-fingerprinting classifier, fake-backend calibration profiles, and practical mission recommendations for small QAOA studies.
 
-## Interface preview
+## Real application preview
 
-![Quantum Compass dark-interface preview](docs/assets/quantum-compass-preview.svg)
+![Real Docker-hosted Quantum Compass Landscape View showing a four-qubit 3-regular Earth-lab simulation with contour and 3-D QAOA landscapes.](docs/assets/application/quantum_compass_landscape_view.png)
 
-The repository includes this self-contained SVG preview so it renders on GitHub without external assets. A deployed Streamlit session is the interactive demo; a screen-recorded GIF can be substituted for this preview in a project release or paper landing page.
+*Actual Quantum Compass application capture: four-qubit 3-regular MaxCut, `p=1`, `earth-lab`, and noise level `0.003`. This figure demonstrates the interactive simulator interface; it is not a hardware measurement.*
+
+The repository also retains a self-contained SVG preview at [`docs/assets/quantum-compass-preview.svg`](docs/assets/quantum-compass-preview.svg) for lightweight rendering contexts. The Docker-hosted Streamlit app is the interactive demonstration.
 
 ## ✨ Ten ways to use it
 
@@ -28,6 +30,27 @@ The repository includes this self-contained SVG preview so it renders on GitHub 
 8. **🧬 Landscape Fingerprinting** — upload a `gamma,beta,ratio` CSV or investigate five mystery landscapes; infer the closest simulated environment, confidence, top-three candidates, and weighted `p₂`/burst-rate estimates.
 9. **📦 Reproducible outputs** — export CSV/NPZ/JSON, static PNG/SVG/PDF figures, and multi-page PDF reports without requiring a browser-installed Chrome runtime.
 10. **🧪 Experimental Validation** — pre-specify a small QAOA hardware study, randomize circuit order, submit with IBM Runtime using your own credentials, upload measured counts, and quantify simulator agreement with bootstrap and full-distribution metrics.
+
+## Real application gallery
+
+Every image below is a reviewed capture from the running Docker-hosted application. They illustrate the interface and its documented simulator/planning workflows; they are not substitutes for the separately reported real-hardware evidence.
+
+<table>
+  <tr>
+    <td width="50%" valign="top"><img src="docs/assets/application/quantum_compass_noise_analysis.png" alt="Noise Analysis and Resonance Detection page showing a completed LEO-satellite noise sweep."/><br/><strong>Noise analysis.</strong> A completed LEO-satellite sweep reports monotone degradation for this configuration rather than claiming resonance.</td>
+    <td width="50%" valign="top"><img src="docs/assets/application/quantum_compass_space_mode.png" alt="Space Mode page comparing Earth laboratory, LEO satellite, and deep-space QAOA landscapes."/><br/><strong>Space Mode.</strong> A controlled same-instance comparison across documented environment profiles.</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><img src="docs/assets/application/quantum_compass_hardware_profiles.png" alt="Hardware Profiles page showing a credential-free IBM Cairo FakeProvider calibration snapshot."/><br/><strong>Hardware profiles.</strong> A credential-free, calibration-derived simulator profile—not a live IBM job.</td>
+    <td width="50%" valign="top"><img src="docs/assets/application/quantum_compass_mission_planner.png" alt="Space Mission Planner configured with the SPOQC-like LEO demonstrator template."/><br/><strong>Mission planning.</strong> Transparent QAOA planning and risk guidance, not flight certification.</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><img src="docs/assets/application/quantum_compass_fingerprinting.png" alt="Landscape Fingerprinting page with a simulated mystery landscape selected."/><br/><strong>Fingerprinting.</strong> A controlled simulator-family diagnostic, not forensic attribution of arbitrary hardware.</td>
+    <td width="50%" valign="top"><img src="docs/assets/application/quantum_compass_experimental_validation.png" alt="Experimental Validation page showing preregistration controls and scientific-boundary notice."/><br/><strong>Experimental validation.</strong> A preregistration-first workflow with an explicit hardware-claim boundary.</td>
+  </tr>
+</table>
+
+[**View the complete application gallery, including Landscape View, Advantage Map, and Barren Plateau workflows →**](docs/application_gallery.md)
 
 ## Quick start
 
@@ -127,10 +150,40 @@ The **🧪 Experimental Validation** page adds a deliberately conservative route
      --dry-run
    ```
 
-3. Set `IBM_QUANTUM_TOKEN` only in your shell, select a real IBM Quantum backend, and submit through Runtime `SamplerV2`. The CLI writes normalized `counts_long.csv`, raw Qiskit counts, and job/compiler provenance—never the token.
+3. Set `IBM_QUANTUM_TOKEN` only in your shell, select a real IBM Quantum backend, and submit through the current client-side Runtime sampler (with a compatibility fallback for older supported clients). The CLI writes a token-free `submission_receipt.json` as soon as IBM returns a job ID, then writes normalized `counts_long.csv`, raw Qiskit counts, and job/compiler provenance—never the token. If a local process ends after a job ID is issued, recover it with `--job-id` rather than submit a duplicate job.
 4. Upload the original manifest and measured counts to compare observed approximation ratios and count distributions against the ideal simulator; enable a FakeProvider-derived reference only when its snapshot is meaningful for the measured backend.
 
 The analysis reports finite-shot bootstrap intervals, absolute ratio error, total variation distance, Hellinger distance, and Jensen–Shannon divergence. Its interpretation is intentionally narrow: agreement only measures predictive fit for the named circuits, backend, and time window. The full preregistration-style procedure, inclusion rules, data convention, and claim boundaries are in [`docs/research/experimental_validation_protocol.md`](docs/research/experimental_validation_protocol.md).
+
+### Recover a job rather than submit twice
+
+A remote Runtime job can continue after the local terminal or container exits. Keep the job ID from `submission_receipt.json`, restore the token only in the current shell, and retrieve the original job without resubmission:
+
+```bash
+python scripts/submit_ibm_validation.py \
+  --manifest studies/descriptive-study-name/qaoa_validation_manifest.json \
+  --backend your_backend_name \
+  --job-id recorded_runtime_job_id \
+  --output-dir studies/descriptive-study-name/backend_run
+```
+
+Recovery writes `job_recovery_receipt.json` and marks the run metadata as recovered. See [`REPRODUCIBILITY.md`](REPRODUCIBILITY.md) for full environment/checksum capture and study-evidence guidance.
+
+### Completed IBM Quantum hardware evidence
+
+Quantum Compass has been exercised in a real IBM Quantum hardware workflow on **`ibm_kingston`**. A four-qubit pipeline pilot was followed by a pre-specified six-qubit, `p=1`, 3-regular MaxCut study. The final study fixed a `3 × 3` angle grid, returned all **9 / 9** planned conditions, and used **4,096 shots per condition** (**36,864** observed shots total).
+
+| Reference model | Conditions | Weighted MAE ratio | Weighted RMSE ratio | Weighted TVD | Weighted Hellinger | Weighted JS divergence |
+|---|---:|---:|---:|---:|---:|---:|
+| Ideal Aer | 9 | 0.00500 | 0.00780 | 0.07978 | 0.09230 | 0.01520 |
+
+![Aggregate hardware-versus-ideal metrics exported from the Quantum Compass Experimental Validation page.](docs/assets/hardware_validation/final_ibm_kingston_aggregate_metrics.png)
+
+![Pre-specified nine-condition QAOA approximation-ratio comparison exported from the Quantum Compass Experimental Validation page. Orange markers/line are measured hardware; the blue dotted line is the ideal Aer reference.](docs/assets/hardware_validation/final_ibm_kingston_ratio_comparison.png)
+
+*The ratio-comparison export preserves the preregistered randomized execution order. Orange denotes measured hardware and blue dotted denotes the ideal-Aer prediction. The chart supports objective-level comparison only; full-distribution disagreement is reported in the metrics table and technical report.*
+
+The result supports a narrow statement: for this named six-qubit circuit family, backend, compiler configuration, and execution period, ideal Aer predicted approximation ratios closely while the full measured distributions retained non-zero disagreement. It does **not** establish quantum advantage, a universal hardware-noise model, or physical-noise attribution. The complete provenance, metrics, result interpretation, and limits are in [`docs/research/hardware_validation_results.md`](docs/research/hardware_validation_results.md). Before making a release public, use the [`public release checklist`](docs/research/public_release_checklist.md) to protect credentials and preserve the evidence boundary.
 
 ## Exports and reports
 
@@ -170,12 +223,17 @@ quantum-compass/
 │   ├── mission_planner.py         # transparent space-QAOA plans
 │   └── aer_worker.py              # isolated persistent Aer worker
 ├── pages/                         # ten Streamlit pages, including hardware validation
-├── scripts/submit_ibm_validation.py # credential-gated Runtime submission CLI
+├── scripts/
+│   ├── submit_ibm_validation.py   # credential-gated Runtime submission/recovery CLI
+│   └── capture_study_provenance.py # local environment + SHA-256 evidence capture
+├── studies/                       # real study bundles; no generated hardware examples
 ├── utils/                         # plotting, analysis, CSV/JSON/PDF/static exports
 ├── data/fingerprint_model.pkl     # pre-trained default classifier cache
 ├── docs/
-│   ├── assets/                    # README interface preview
-│   └── research/                  # hardware-validation protocol and fingerprint model card
+│   ├── application_gallery.md      # captioned real-app workflow gallery
+│   ├── assets/                    # real app captures plus public-safe hardware visuals
+│   └── research/                  # protocol, results, evidence layout, and future work
+├── .github/workflows/tests.yml    # GitHub Actions regression checks
 ├── tests/test_core.py             # core regression suite
 └── .streamlit/config.toml         # dark Streamlit theme and server settings
 ```
@@ -192,7 +250,7 @@ The in-app **📚 About** page includes these and seven additional references in
 
 ## Citation
 
-If you use Quantum Compass figures, datasets, methodology, or code, cite the tool and the relevant underlying environment/model literature:
+Machine-readable citation metadata is provided in [`CITATION.cff`](CITATION.cff). If you use Quantum Compass figures, datasets, methodology, or code, cite the tool and the relevant underlying environment/model literature:
 
 ```bibtex
 @software{quantum_compass,
@@ -253,19 +311,11 @@ docker run --rm --publish 8501:8501 \
 
 The committed `requirements.txt`, `.streamlit/config.toml`, `runtime.txt`, Docker files, and pre-trained fingerprint cache are deployment-ready. No browser or system Chrome package is required for static Plotly exports.
 
-### 1. Publish the repository on GitHub
+### 1. Publish only after a privacy and evidence audit
 
-Create a new public GitHub repository named `quantum-compass`, then run from this project directory. The GitHub CLI path below creates the remote under the authenticated account and avoids hand-editing a repository URL:
+Keep the repository private while it is being polished. Before changing visibility or creating a public release, follow [`RELEASE.md`](RELEASE.md) and [`docs/research/public_release_checklist.md`](docs/research/public_release_checklist.md). In particular, inspect the entire commit history for credentials, account information, local paths, and author-email privacy; verify the preregistration tag and raw study evidence remain intact; and run the full test suite from the actual checkout.
 
-```bash
-git init
-git add app.py core pages utils data docs tests .streamlit requirements.txt runtime.txt README.md LICENSE .gitignore
-git commit -m "Release Quantum Compass"
-git branch -M main
-gh repo create quantum-compass --public --source=. --remote=origin --push
-```
-
-Alternatively, create the repository in the GitHub web interface and use the exact **“…or push an existing repository from the command line”** commands shown there. Set the repository description to **“Interactive QAOA optimization-landscape navigator for terrestrial, hardware, and space noise studies.”** Keep `data/fingerprint_model.pkl` under version control so visitors do not wait for first-run training.
+For an existing GitHub repository, push the reviewed release commit and annotated tag first while it is still private. Only then change repository visibility if the audit is complete. Set the public description to **“Interactive QAOA optimization-landscape navigator for terrestrial, hardware, and space noise studies.”** Keep `data/fingerprint_model.pkl` under version control so visitors do not wait for first-run training.
 
 ### 2. Deploy the Streamlit app
 

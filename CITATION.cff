@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use Quantum Compass, please cite this software and the relevant underlying research."
+title: "Quantum Compass: QAOA Optimization Landscape Navigator"
+type: software
+authors:
+  - name: "Quantum Compass Contributors"
+license: MIT
+keywords:
+  - quantum computing
+  - QAOA
+  - MaxCut
+  - variational quantum algorithms
+  - Qiskit
+  - reproducible research
+abstract: "An interactive and evidence-oriented toolkit for QAOA MaxCut optimization landscapes, controlled noise studies, and narrowly scoped hardware-versus-simulator comparisons."

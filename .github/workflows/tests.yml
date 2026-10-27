@@ -1,0 +1,39 @@
+name: Test and validate
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  core-regression:
+    name: Core regression (Python 3.12)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install dependencies
+        run: python -m pip install --upgrade pip && python -m pip install -r requirements.txt pytest
+
+      - name: Run core regression tests
+        run: python -m pytest tests/test_core.py -q
+
+      - name: Compile Python sources
+        run: python -m compileall -q app.py core utils pages scripts tests
+
+      - name: Exercise credential-free CLI help
+        run: |
+          python scripts/submit_ibm_validation.py --help
+          python scripts/capture_study_provenance.py --help

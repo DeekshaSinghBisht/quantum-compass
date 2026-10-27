@@ -322,20 +322,27 @@ The command does four things:
 3. submits one IBM Runtime sampler job; and
 4. waits for the result.
 
-After it submits, the terminal prints an IBM Runtime job ID. Copy that ID into a notebook or a plain text study log. Do not close the terminal while it is waiting. Queue time can vary.
+As soon as IBM accepts the job, the terminal prints an IBM Runtime job ID and writes `submission_receipt.json`. Copy the ID into a notebook or plain-text study log. Queue time can vary, so keep the terminal open when practical.
 
 A completed run writes:
 
 ```text
 studies/pilot/ibm_brisbane_run/
+├── submission_receipt.json
 ├── counts_long.csv
 ├── raw_qiskit_counts.json
 └── run_metadata.json
 ```
 
-Keep all three files. Do not edit them manually.
+Keep all files. Do not edit them manually.
 
-If submission fails, preserve the error message and job ID (if one was printed). Do not keep retrying blindly or modify the downloaded manifest after a failed/partial run.
+If the terminal or container closes after a job ID is issued, do **not** submit the manifest again. Restore the token in a new terminal and recover the original remote job:
+
+```bash
+python scripts/submit_ibm_validation.py --manifest studies/pilot/qaoa_validation_manifest.json --backend ibm_brisbane --job-id RECORDED_RUNTIME_JOB_ID --output-dir studies/pilot/ibm_brisbane_run
+```
+
+This writes `job_recovery_receipt.json` and retrieves the existing job without spending credits on a duplicate circuit batch. If submission fails before any job ID appears, preserve the error message; do not keep retrying blindly or modify the downloaded manifest after a failed/partial run.
 
 ---
 
@@ -426,7 +433,7 @@ Use the same safe token setup from Part D in a fresh terminal, then run a comman
 python scripts/submit_ibm_validation.py --manifest studies/final_v1/qaoa_validation_manifest.json --backend ibm_brisbane --output-dir studies/final_v1/ibm_brisbane_run
 ```
 
-Do not change the manifest after submission. Preserve the job ID, all three outputs, and any error/queue information.
+Do not change the manifest after submission. Preserve the job ID, immediate `submission_receipt.json`, all completed-run outputs, and any error/queue information. If the local client stops after job acceptance, use the `--job-id` recovery command shown in Part E rather than resubmitting the final study.
 
 ---
 
