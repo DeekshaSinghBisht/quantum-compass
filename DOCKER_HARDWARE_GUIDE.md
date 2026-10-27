@@ -205,16 +205,25 @@ docker compose run --rm -e IBM_QUANTUM_TOKEN quantum-compass python scripts/subm
 
 The `-e IBM_QUANTUM_TOKEN` option copies the value from the current host shell into **this temporary one-off container only**. It is not placed in the running browser-app container, the image, the Compose file, or your research output. Docker documents this named-variable pass-through behavior for `docker compose run -e NAME`.
 
-The CLI prints the IBM job ID immediately after submission. Record it and keep the terminal open while the job waits in the queue and retrieves results.
+The CLI prints the IBM job ID and writes `submission_receipt.json` immediately after submission. Record the ID and keep the terminal open while the job waits in the queue and retrieves results when practical.
 
 On completion, these host files should exist:
 
 ```text
 studies/pilot/ibm_brisbane_run/
+├── submission_receipt.json
 ├── counts_long.csv
 ├── raw_qiskit_counts.json
 └── run_metadata.json
 ```
+
+If the one-off container or terminal exits after the receipt is written, do **not** submit again. Re-export the token only in the current host shell and recover the already accepted remote job:
+
+```bash
+docker compose run --rm -e IBM_QUANTUM_TOKEN quantum-compass python scripts/submit_ibm_validation.py --manifest studies/pilot/qaoa_validation_manifest.json --backend ibm_brisbane --job-id RECORDED_RUNTIME_JOB_ID --output-dir studies/pilot/ibm_brisbane_run
+```
+
+Recovery writes `job_recovery_receipt.json` and retrieves the original result without a duplicate QPU submission.
 
 Remove the token from your current shell afterward:
 

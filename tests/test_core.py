@@ -885,11 +885,19 @@ class TestExperimentalValidation(unittest.TestCase):
                 Path(directory), manifest, conditions, raw_counts,
                 backend_name="unit-test-backend", job_id="unit-test-job", qiskit_version="test",
                 optimization_level=1, overwrite=False,
+                runtime_client_version="0.test",
+                sampler_implementation="client-side-executor-sampler",
+                result_source="direct_submission",
+                submission_receipt_path="/private/local/path/submission_receipt.json",
             )
             self.assertTrue(raw_path.exists() and metadata_path.exists())
             frame = parse_counts_csv(counts_path.read_bytes(), manifest)
             self.assertEqual(set(frame["bitstring"]), {"1000"})
             self.assertEqual(frame["count"].sum(), 1024 * len(conditions))
+            import json
+            metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+            self.assertEqual(metadata["result_receipt_file"], "submission_receipt.json")
+            self.assertNotIn("/private/local/path", json.dumps(metadata))
 
     def test_runtime_submission_cli_dry_run_has_no_credential_requirement(self):
         import json
@@ -910,6 +918,197 @@ class TestExperimentalValidation(unittest.TestCase):
             self.assertFalse(plan["network_submission"])
             self.assertEqual(len(plan["circuits"]), manifest["execution_plan"]["condition_count"])
             self.assertTrue(all("measure" in item["operation_counts"] for item in plan["circuits"]))
+
+    def test_submission_and_recovery_receipts_are_auditable_and_secret_free(self):
+        import json
+
+        from scripts.submit_ibm_validation import (
+            write_job_recovery_receipt,
+            write_submission_receipt,
+        )
+
+        manifest = self._manifest()
+        with tempfile.TemporaryDirectory() as directory:
+            output_dir = Path(directory)
+            submission = write_submission_receipt(
+                output_dir,
+                manifest,
+                backend_name="unit-test-backend",
+                job_id="unit-test-job-123",
+                optimization_level=1,
+                runtime_client_version="0.test",
+                sampler_implementation="client-side-executor-sampler",
+                channel="ibm_quantum_platform",
+                instance_provided=True,
+                overwrite=False,
+            )
+            recovery = write_job_recovery_receipt(
+                output_dir,
+                manifest,
+                backend_name="unit-test-backend",
+                job_id="unit-test-job-123",
+                remote_status="DONE",
+                optimization_level=1,
+                runtime_client_version="0.test",
+                channel="ibm_quantum_platform",
+                instance_provided=True,
+                overwrite=False,
+            )
+            submission_payload = json.loads(submission.read_text(encoding="utf-8"))
+            recovery_payload = json.loads(recovery.read_text(encoding="utf-8"))
+            self.assertEqual(submission_payload["event"], "submitted_waiting_for_result")
+            self.assertEqual(submission_payload["job_id"], "unit-test-job-123")
+            self.assertEqual(recovery_payload["event"], "recovered_existing_job")
+            self.assertEqual(recovery_payload["remote_status_before_result_retrieval"], "DONE")
+            serialized = json.dumps({"submission": submission_payload, "recovery": recovery_payload})
+            self.assertNotIn("IBM_QUANTUM_TOKEN", serialized)
+            self.assertNotIn("super-secret", serialized)
+            self.assertFalse(submission_payload["token_stored"])
+            self.assertFalse(recovery_payload["token_stored"])
+
+    def test_study_provenance_capture_hashes_actual_files_without_self_hashing(self):
+        import json
+
+        from scripts.capture_study_provenance import capture_study_provenance
+
+        with tempfile.TemporaryDirectory() as directory:
+            study_dir = Path(directory) / "study"
+            study_dir.mkdir()
+            (study_dir / "manifest.json").write_text('{"manifest": "actual-test-input"}\n', encoding="utf-8")
+            (study_dir / "counts_long.csv").write_text("condition_id,bitstring,count\na,0000,1\n", encoding="utf-8")
+            environment, checksums, file_count = capture_study_provenance(
+                study_dir,
+                study_dir / "environment.json",
+                study_dir / "SHA256SUMS.txt",
+                overwrite=False,
+            )
+            self.assertEqual(file_count, 3)
+            environment_payload = json.loads(environment.read_text(encoding="utf-8"))
+            self.assertFalse(environment_payload["credentials_stored"])
+            self.assertFalse(environment_payload["host_identity_stored"])
+            checksum_text = checksums.read_text(encoding="utf-8")
+            self.assertIn("manifest.json", checksum_text)
+            self.assertIn("counts_long.csv", checksum_text)
+            self.assertIn("environment.json", checksum_text)
+            self.assertNotIn("SHA256SUMS.txt", checksum_text)
+            with self.assertRaises(FileExistsError):
+                capture_study_provenance(
+                    study_dir,
+                    study_dir / "environment.json",
+                    study_dir / "SHA256SUMS.txt",
+                    overwrite=False,
+                )
+
+    def test_runtime_cli_parses_existing_job_recovery_without_submitting(self):
+        from scripts.submit_ibm_validation import parse_args
+
+        args = parse_args([
+            "--manifest", "manifest.json", "--backend", "unit-test-backend", "--job-id", "job-123",
+            "--output-dir", "recovered-output",
+        ])
+        self.assertEqual(args.job_id, "job-123")
+        self.assertEqual(args.backend, "unit-test-backend")
+        self.assertEqual(args.output_dir, Path("recovered-output"))
+        with self.assertRaises(SystemExit):
+            parse_args(["--manifest", "manifest.json", "--job-id", "job-123"])
+        with self.assertRaises(SystemExit):
+            parse_args(["--manifest", "manifest.json", "--backend", "unit-test-backend", "--job-id", "job-123", "--dry-run"])
+
+    def test_submission_receipt_callback_precedes_result_retrieval(self):
+        from unittest.mock import patch
+
+        import scripts.submit_ibm_validation as submission
+
+        events = []
+
+        class FakeJob:
+            def job_id(self):
+                return "new-job-123"
+
+            def result(self):
+                events.append("result")
+                return [object(), object()]
+
+        class FakeSampler:
+            def run(self, circuits, shots):
+                self.circuits = list(circuits)
+                self.shots = shots
+                events.append("submitted")
+                return FakeJob()
+
+        class FakeService:
+            def backend(self, name):
+                self.backend_name = name
+                return "backend-object"
+
+        fake_sampler = FakeSampler()
+        callback_records = []
+        with patch.object(submission, "_make_runtime_service", return_value=FakeService()), \
+             patch.object(submission, "transpile_for_backend", side_effect=lambda circuits, backend, level: list(circuits)), \
+             patch.object(submission, "_make_runtime_sampler", return_value=(fake_sampler, "client-side-executor-sampler")), \
+             patch.object(submission, "_runtime_client_version", return_value="0.test"), \
+             patch.object(submission, "_result_counts", side_effect=[{"0000": 5}, {"1111": 5}]):
+            raw_counts, job_id, _backend, compiled, details = submission.submit_with_runtime(
+                ["circuit-1", "circuit-2"],
+                backend_name="unit-test-backend",
+                token="never-persisted",
+                channel="ibm_quantum_platform",
+                instance=None,
+                shots=5,
+                optimization_level=1,
+                on_submitted=lambda received_job_id, received_details: (
+                    events.append("receipt"), callback_records.append((received_job_id, dict(received_details)))
+                ),
+            )
+        self.assertEqual(job_id, "new-job-123")
+        self.assertEqual(compiled, ["circuit-1", "circuit-2"])
+        self.assertEqual(raw_counts, [{"0000": 5}, {"1111": 5}])
+        self.assertEqual(fake_sampler.shots, 5)
+        self.assertLess(events.index("receipt"), events.index("result"))
+        self.assertEqual(callback_records[0][0], "new-job-123")
+        self.assertEqual(callback_records[0][1]["sampler_implementation"], "client-side-executor-sampler")
+
+    def test_existing_job_recovery_reads_remote_result_without_sampler_submission(self):
+        from unittest.mock import patch
+
+        import scripts.submit_ibm_validation as submission
+
+        class FakeRecoveredJob:
+            def status(self):
+                return "DONE"
+
+            def result(self):
+                return [object(), object()]
+
+            def backend(self):
+                return type("Backend", (), {"name": "unit-test-backend"})()
+
+        class FakeRecoveryService:
+            def __init__(self):
+                self.requested_job_id = None
+
+            def job(self, job_id):
+                self.requested_job_id = job_id
+                return FakeRecoveredJob()
+
+        service = FakeRecoveryService()
+        with patch.object(submission, "_make_runtime_service", return_value=service), \
+             patch.object(submission, "_runtime_client_version", return_value="0.test"), \
+             patch.object(submission, "_result_counts", side_effect=[{"0000": 7}, {"1111": 7}]):
+            raw_counts, job_id, details = submission.recover_existing_job_with_runtime(
+                job_id="existing-job-456",
+                backend_name="unit-test-backend",
+                token="never-persisted",
+                channel="ibm_quantum_platform",
+                instance=None,
+                expected_condition_count=2,
+            )
+        self.assertEqual(service.requested_job_id, "existing-job-456")
+        self.assertEqual(job_id, "existing-job-456")
+        self.assertEqual(raw_counts, [{"0000": 7}, {"1111": 7}])
+        self.assertEqual(details["result_source"], "recovered_existing_job")
+        self.assertEqual(details["remote_status_before_result_retrieval"], "DONE")
+        self.assertEqual(details["remote_backend_name"], "unit-test-backend")
 
 
 class TestLandscapeFingerprinting(unittest.TestCase):
